@@ -6,13 +6,15 @@ namespace AdvantageShoppingAutomation.Tests
     public class RegistrationTests : BaseTest
     {
         [Test]
-        [Repeat (5)]
         public void LOG001_MandatoryFieldValidation_ShowsAndClearsErrors()
         {
             UserData userData = TestDataLoader.LoadUserData();
 
-            // Navigate to /register via login modal on the home page
+            // Navigate to the home page
+            Driver.Navigate().GoToUrl(TestDataLoader.LoadBaseUrl());
             var homePage = new HomePage(Driver);
+
+            // Navigate to /register via login modal on the home page
             homePage.ClickUserIcon();
             homePage.ClickCreateNewAccountLink();
 

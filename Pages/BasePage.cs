@@ -12,15 +12,24 @@ namespace AdvantageShoppingAutomation.Pages
             Driver = driver;
         }
 
+        // Global selector for loader spinners
+        protected By loaderLocator => By.ClassName("loader");
+
         public void SafeClick(By locator)
         {
-            var element = WaitHelper.WaitUntilClickable(Driver, locator);
+            // Verify that no loaders are on screen
+            WaitHelper.WaitUntilAllInvisible(Driver, loaderLocator);
+
+            IWebElement element = WaitHelper.WaitUntilClickable(Driver, locator);
             element.Click();
         }
 
         public void SafeSendKeys(By locator, string value)
         {
-            var element = WaitHelper.WaitUntilVisible(Driver, locator);
+            // Verify that no loaders are on screen
+            WaitHelper.WaitUntilAllInvisible(Driver, loaderLocator);
+
+            IWebElement element = WaitHelper.WaitUntilVisible(Driver, locator);
             element.Clear();
             element.SendKeys(value);
         }
@@ -31,18 +40,27 @@ namespace AdvantageShoppingAutomation.Pages
             catch (NoSuchElementException) { return false; }
         }
 
-        // Icon buttons in the website header, common to all pages
+        // Website header is common to all pages
         protected By UserIcon = By.Id("menuUser");
         public void ClickUserIcon() => SafeClick(UserIcon);
 
         // Login modal
+        protected By LoginModal = By.XPath("//login-modal/div[@class='PopUp']");
         protected By CreateNewAccountLink = By.ClassName("create-new-account");
-        public void ClickCreateNewAccountLink() => SafeClick(CreateNewAccountLink);
+        public void ClickCreateNewAccountLink()
+        {
+            // Wait for the login modal to be fully revealed
+            WaitHelper.WaitUntilVisible(Driver, LoginModal);
+            Thread.Sleep(1000);
 
+            WaitHelper.WaitUntilClickable(Driver, CreateNewAccountLink);
+            SafeClick(CreateNewAccountLink);
+        }
 
         public void Log(String message)
         {
             Console.WriteLine($"[LOG] {DateTime.Now:HH:mm:ss} - {message}");
         }
+
     }
 }
