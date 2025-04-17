@@ -1,0 +1,15 @@
+{
+    "Username": "TestUser123",
+    "Email": "test@example.com",
+    "Password": "Password123!",
+    "FirstName": "John",
+    "LastName": "Citizen",
+    "PhoneNumber": "+61400123456",
+    "Address": {
+        "Country": "Australia",
+        "City": "Sydney",
+        "Street": "42 Wallaby Way",
+        "State": "NSW",
+        "PostCode": "2000"
+    },
+}
