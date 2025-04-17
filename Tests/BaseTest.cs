@@ -16,7 +16,8 @@ namespace AdvantageShoppingAutomation.Tests
         [SetUp]
         public void NavigateToSite()
         {
-            Driver.Navigate().GoToUrl("https://www.advantageonlineshopping.com/");
+            Driver.Navigate().GoToUrl(TestDataLoader.LoadBaseUrl());
+
         }
 
         [OneTimeTearDown]
