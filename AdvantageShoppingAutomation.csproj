@@ -26,8 +26,6 @@
 
   <ItemGroup>
     <Folder Include="TestData\" />
-    <Folder Include="Utilities\" />
-    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>
