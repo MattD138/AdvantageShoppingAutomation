@@ -38,7 +38,7 @@ namespace AdvantageShoppingAutomation.Pages
         private List<IWebElement> ErrorMessages => Driver.FindElements(registerFormErrorLabelLocator).ToList();
         public List<string> GetErrorMessages() => ErrorMessages.Select(e => e.Text).ToList();
 
-        public bool AreErrorsCleared() => !ErrorMessages.Any();
+        public bool AreErrorsCleared() => ErrorMessages.Count == 0;
 
     }
 }

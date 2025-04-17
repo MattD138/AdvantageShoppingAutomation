@@ -6,31 +6,36 @@ namespace AdvantageShoppingAutomation.Tests
     public class RegistrationTests : BaseTest
     {
         [Test]
+        [Repeat (5)]
         public void LOG001_MandatoryFieldValidation_ShowsAndClearsErrors()
         {
             UserData userData = TestDataLoader.LoadUserData();
 
-            // Navigate to /register via home page
+            // Navigate to /register via login modal on the home page
             var homePage = new HomePage(Driver);
             homePage.ClickUserIcon();
             homePage.ClickCreateNewAccountLink();
 
+            // Click into and out of the Username, Email, Password and Confirm Password fields
             var registerPage = new RegistrationPage(Driver);
             registerPage.TriggerMandatoryFieldErrors();
 
             var registerFormErrors = registerPage.GetErrorMessages();
 
-            Assert.IsTrue(registerFormErrors.Any(e => e.Contains("Username field is required")));
-            Assert.IsTrue(registerFormErrors.Any(e => e.Contains("Email field is required")));
-            Assert.IsTrue(registerFormErrors.Any(e => e.Contains("Password field is required")));
-            Assert.IsTrue(registerFormErrors.Any(e => e.Contains("Confirm password field is required")));
+            // Verify that errors display and contain the correct content
+            Assert.That(registerFormErrors, Has.Some.Contain("Username field is required"));
+            Assert.That(registerFormErrors, Has.Some.Contain("Email field is required"));
+            Assert.That(registerFormErrors, Has.Some.Contain("Password field is required"));
+            Assert.That(registerFormErrors, Has.Some.Contain("Confirm password field is required"));
 
+            // Enter valid data for Username, Email, Password and Confirm Password fields
             registerPage.EnterMandatoryData(
                 userData.Username,
                 userData.Email,
                 userData.Password);
 
-            Assert.IsTrue(registerPage.AreErrorsCleared());
+            // Verify that all errors are cleared
+            Assert.That(registerPage.AreErrorsCleared(), Is.True);
         }
     }
 }
